@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TodoListViewComponent } from './components/todo-list-view/todo-list-view.component';
 import { TodoGatewayToken } from './gateways/TodoGateway';
-import TodoHttpGateway from './gateways/TodoHttpGateway';
+import { TodoHttpGateway } from './gateways/TodoHttpGateway';
 import { HttpClientAdapter } from './infra/HttpAdapter';
 import { HttpClientToken } from './infra/HttpClient';
 

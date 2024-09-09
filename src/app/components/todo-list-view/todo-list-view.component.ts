@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import TodoGateway, { TodoGatewayToken } from 'src/app/gateways/TodoGateway';
+import { TodoGateway, TodoGatewayToken } from 'src/app/gateways/TodoGateway';
 
 export type TodoType = {
   id: string;
@@ -29,15 +29,13 @@ export class TodoListViewComponent implements OnInit {
         this.todos = response as Array<TodoType>;
         this.updateCompleted();
       },
-      error: (error) => {
-        console.log(error);
-      }
+      error: (error) => { console.log(error) }
     })
   }
 
   addItem() {
     if (!this.description) {
-      alert('Insira uma tarefa, antes de adicionar');
+      alert('Digite uma tarefa, antes de adicionar');
       return;
     }
 
@@ -63,12 +61,8 @@ export class TodoListViewComponent implements OnInit {
     this.description = '';
 
     this.todoGateway.addItem(item).subscribe({
-      next: () => {
-        this.updateCompleted();
-      },
-      error: (error) => {
-        console.log(error);
-      }
+      next: () => { this.updateCompleted() },
+      error: (error) => { console.log(error) }
     });
   }
 
@@ -76,12 +70,8 @@ export class TodoListViewComponent implements OnInit {
     item.done = !item.done;
 
     this.todoGateway.updateItem(item).subscribe({
-      next: () => {
-        this.updateCompleted();
-      },
-      error: (error) => {
-        console.log(error);
-      }
+      next: () => { this.updateCompleted() },
+      error: (error) => { console.log(error) }
     });
   }
 
@@ -93,16 +83,11 @@ export class TodoListViewComponent implements OnInit {
   }
 
   remove(item: TodoType) {
-    const newArray = this.todos.filter(item => item.id !== item.id);
-    this.todos = newArray;
+    this.todos.splice(this.todos.indexOf(item), 1);
 
     this.todoGateway.removeItem(item.id).subscribe({
-      next: () => {
-        this.updateCompleted();
-      },
-      error: (error) => {
-        console.log(error);
-      }
+      next: () => { this.updateCompleted() },
+      error: (error) => { console.log(error) }
     });
   }
 }
