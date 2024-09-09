@@ -1,28 +1,41 @@
 <div class="todos-container">
-  <div *ngIf="todos; else noTodoContent">
-    <div *ngFor="let item of todos; let i = index" class="todos-content">
+  <div *ngIf="todoList.items?.length > 0; else noTodoContent">
+    <div
+      *ngFor="let item of todoList.items; let i = index"
+      class="todos-content"
+    >
       <span [ngStyle]="{ 'text-decoration': item.done ? 'line-through' : '' }">
         {{ item.description }}
       </span>
 
       <div class="todo-done">
-        <a (click)="toggleDone(item)">{{ item.done ? "❌" : "✅" }}</a>
+        <a (click)="todoList.toggleDone(item)">{{ item.done ? "❌" : "✅" }}</a>
 
-        <button (click)="remove(item)" class="btn-remove">Remover</button>
+        <button (click)="todoList.removeItem(item)" class="btn-remove">
+          Remover
+        </button>
       </div>
     </div>
   </div>
 
-  <ng-template #noTodoContent>Adicione tarefas</ng-template>
+  <ng-template #noTodoContent>
+    <span class="no-todo-content">Adicione tarefas</span>
+  </ng-template>
 
   <span class="percentage">
     Tarefas completas:
     <span
       [ngStyle]="{
-        color: completed <= 33 ? 'red' : completed <= 66 ? 'orange' : 'green'
+        color:
+          todoList.getCompleted() <= 33
+            ? 'red'
+            : todoList.getCompleted() <= 66
+            ? 'orange'
+            : 'green'
       }"
-      >{{ completed }}%</span
     >
+      {{ todoList.getCompleted() }}%
+    </span>
   </span>
 
   <input

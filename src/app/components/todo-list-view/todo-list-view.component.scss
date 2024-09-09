@@ -19,10 +19,16 @@
   padding: 0.75rem 0;
 }
 
+.no-todo-content,
 .percentage {
   font-size: 20px;
   font-weight: bold;
   margin-top: 1rem;
+}
+
+.no-todo-content {
+  border-bottom: 1px solid gray;
+  padding: 0 0 0.75rem 0;
 }
 
 .todo-done {
