@@ -1,0 +1,34 @@
+<div class="todos-container">
+  <div *ngIf="todos; else noTodoContent">
+    <div *ngFor="let item of todos; let i = index" class="todos-content">
+      <span [ngStyle]="{ 'text-decoration': item.done ? 'line-through' : '' }">
+        {{ item.description }}
+      </span>
+
+      <div class="todo-done">
+        <a (click)="toggleDone(item)">{{ item.done ? "❌" : "✅" }}</a>
+
+        <button (click)="remove(item)" class="btn-remove">Remover</button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noTodoContent>Adicione tarefas</ng-template>
+
+  <span class="percentage">
+    Tarefas completas:
+    <span
+      [ngStyle]="{
+        color: completed <= 33 ? 'red' : completed <= 66 ? 'orange' : 'green'
+      }"
+      >{{ completed }}%</span
+    >
+  </span>
+
+  <input
+    type="text"
+    [(ngModel)]="description"
+    placeholder="Digite a tarefa e pressione enter"
+    (keyup.enter)="addItem()"
+  />
+</div>
