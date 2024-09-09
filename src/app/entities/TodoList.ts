@@ -11,15 +11,9 @@ export class TodoList {
   constructor(
     @Inject(TodoGatewayToken) private todoGateway: TodoGateway,
   ) {
-    this.todoGateway.getTodos().subscribe((response) => {
-      this.items = response as Array<any>;
-    });
+    this.todoGateway.getTodos().subscribe((res) => { this.items = res });
   }
 
-  //  this.todoGateway.addItem(item).subscribe({
-  //   next: () => { this.updateCompleted() },
-  //   error: (error) => { console.log(error) }
-  // });
   addItem(description: string) {
     if (!description) {
       alert('Digite uma tarefa, antes de adicionar');
@@ -46,23 +40,27 @@ export class TodoList {
 
     this.items.push(item);
     description = '';
+
+    this.todoGateway.addItem(item).subscribe({
+      error: (error) => { console.log(error) }
+    });
   }
 
-  // this.todoGateway.removeItem(item.id).subscribe({
-  //   next: () => { this.updateCompleted() },
-  //   error: (error) => { console.log(error) }
-  // });
   removeItem(item: any) {
     const newItems = this.items.filter((todo: any) => todo.id !== item.id);
     this.items = newItems;
+
+    this.todoGateway.removeItem(item.id).subscribe({
+      error: (error) => { console.log(error) }
+    });
   }
 
-  // this.todoGateway.updateItem(item).subscribe({
-  //   next: () => { this.updateCompleted() },
-  //   error: (error) => { console.log(error) }
-  // });
   toggleDone(item: any) {
     item.done = !item.done;
+
+    this.todoGateway.updateItem(item).subscribe({
+      error: (error) => { console.log(error) }
+    });
   }
 
   getItem(description: string) {
